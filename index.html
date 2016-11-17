@@ -21,8 +21,8 @@
     </table>
 </div>
 <!--引用腾讯template模板-->
-<script src="js/template-native.js"></script>
-<script src="js/jquery.min.js"></script>
+<script src="./js/template-native.js"></script>
+<script src="./js/jquery.min.js"></script>
 <!--script类型为text/template在这个script里面定义模板-->
 <script type="text/template" id="template_Id">
     <%for(var i=0;i
@@ -41,7 +41,7 @@
             <!--发送请求给服务器，服务器返回json格式数据，使用template模板去解析，把内容写到视图-->
             $.ajax({
                 type: "GET",
-                url: "php/template.php",
+                url: "./php/template.php",
                 success: function (data) {
                     data = JSON.parse(data);
                     var obj = {
@@ -49,7 +49,6 @@
                     }
 //                    调用模板中的template(参1，参2)方法进行数据绑定，参一为定义模板的script的id，参2必须为对象
                     var html = (template("template_Id", obj));
-                    ;
                     $("table").append(html);
                 }
             });
