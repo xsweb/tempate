@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>template</title>
+    <style>
+        .wrap {
+            width: 500px;
+            height: 500px;
+            background-color: #ccc;
+            border: 10px solid #333;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <input id="inp" type="button" value="发送请求，使用模板解析数据">
+    <table border="1">
+
+    </table>
+</div>
+<!--引用腾讯template模板-->
+<script src="js/template-native.js"></script>
+<script src="js/jquery.min.js"></script>
+<!--script类型为text/template在这个script里面定义模板-->
+<script type="text/template" id="template_Id">
+    <%for(var i=0;i
+    <list.length;i++){%>
+    <tr>
+        <td><%=list[i].username%></td>
+        <td><%=list[i].age%></td>
+        <td><%=list[i].sex%></td>
+    </tr>
+    <%}%>
+</script>
+<script>
+    $(function () {
+        $("#inp").bind("click", function () {
+            $('table').html("<tr><th>用户</th><th>年龄</th><th>性别</th></tr>");
+            <!--发送请求给服务器，服务器返回json格式数据，使用template模板去解析，把内容写到视图-->
+            $.ajax({
+                type: "GET",
+                url: "php/template.php",
+                success: function (data) {
+                    data = JSON.parse(data);
+                    var obj = {
+                        list: data
+                    }
+//                    调用模板中的template(参1，参2)方法进行数据绑定，参一为定义模板的script的id，参2必须为对象
+                    var html = (template("template_Id", obj));
+                    ;
+                    $("table").append(html);
+                }
+            });
+        })
+    })
+</script>
+</body>
+</html>
